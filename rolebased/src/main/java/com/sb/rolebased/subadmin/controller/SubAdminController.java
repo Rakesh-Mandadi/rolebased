@@ -77,7 +77,7 @@ public class SubAdminController {
 		System.out.println("SubAdminController 2");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(SuccessResponse.<FacilityDTO>builder()
-						.data(facilityDTO)
+						.data(facilityDTO )
 						.massage("facility details has been saved")
 						.build());
 	}
