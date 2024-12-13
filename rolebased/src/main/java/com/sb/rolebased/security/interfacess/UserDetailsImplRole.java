@@ -5,12 +5,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.sb.rolebased.forgotpassword.ForgotPasswordDto;
+//import com.sb.rolebased.forgotpassword.ForgotPasswordRequestDto;
 import com.sb.rolebased.usermanagment.entity.UserRole;
+import com.sb.rolebased.usermanagment.repository.UserRepositoryRole;
+
+import jakarta.persistence.OneToOne;
 
 
 public class UserDetailsImplRole implements UserDetails {
@@ -28,7 +34,8 @@ public class UserDetailsImplRole implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	
+  //  @OneToOne(mappedBy = "userdetailsimplrole")
+    //private ForgotPasswordRequestDto forgotPasswordRequestDto;
 	 
 	
 	public UserDetailsImplRole(String email, String username, String password, Long long1,
@@ -51,6 +58,7 @@ public class UserDetailsImplRole implements UserDetails {
 		
 		return new UserDetailsImplRole(userRole.getEmail(), userRole.getName(), userRole.getPassword(), userRole.getId(), garntauth);
 	}
+	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -113,5 +121,18 @@ public class UserDetailsImplRole implements UserDetails {
 		UserDetailsImplRole user = (UserDetailsImplRole) o;
 		return Objects.equals(id, user.id);
 	}
+	 @Autowired
+	    private UserRepositoryRole userRepository;
+
+	    public void updatePassword(String email, String newPassword) {
+	        UserRole user = userRepository.findByEmail(email)
+	                .orElseThrow(() -> new RuntimeException("User not found."));
+
+	        // Hash the password before saving it (use BCrypt or similar)
+//	        String hashedPassword = passwordEncoder.BCryptPasswordEncoder(newPassword);
+//	        user.setPassword(hashedPassword);
+
+	        userRepository.save(user);
+	    }
 
 }

@@ -1,6 +1,7 @@
 package com.sb.rolebased.usermanagment.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,10 +52,16 @@ public class UserRole {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
 									inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<RoleRole> roles = new HashSet<>();
+	
+	
 
 	public UserRole(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		
+
+
 	}
+	
 }

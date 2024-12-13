@@ -58,7 +58,7 @@ public class SecurityConfigRole {
         System.out.println("In security filter chain....");
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/v1/auth/signup", "/api/v1/auth/signin", "/api/v1/auth/subAdmin/signin", "/api-docs", "/api/v1/users/**")
+                        auth.requestMatchers("/api/v1/auth/signup","/api/v1/auth/*", "/api/v1/auth/signin", "/api/v1/auth/subAdmin/signin", "/api-docs", "/api/v1/users/*")
                         			.permitAll()
  //                       		.requestMatchers("/api/v1/users/**")
  //                            .authenticated()
@@ -79,6 +79,21 @@ public class SecurityConfigRole {
 		
 		return authenticationProvider;
 	}
+	
+//	@SuppressWarnings("deprecation")
+//	@Override
+//	public  configure(HttpSecurity http) throws Exception {
+//	    http.csrf().disable()
+//	        .authorizeRequests()
+//	        .requestMatchers("/api/v1/auth/send-otp", "/api/v1/auth/reset-password").permitAll()
+//	        .anyRequest().authenticated();
+//	}
+
+	
+	
+	
+	
+	
 }
 
 

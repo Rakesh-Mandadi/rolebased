@@ -74,7 +74,7 @@ public class FacilityBySuperAdminServiceImp implements FacilityBySuperAdminServi
     	 if (facilityDto.getFacilityId() == null || facilityDto.getFacilityId().isEmpty()) {
             // Take the first 3 or 4 characters of the facility name, default to 3
             String prefix = facilityDto.getFacilityName() != null && facilityDto.getFacilityName().length() >= 3 
-                ? facilityDto.getFacilityName().substring(0, 2) 
+                ? facilityDto.getFacilityName().substring(0, 3) 
                 : "FAC";
 
             // Generate a unique ID and append it to the prefix
