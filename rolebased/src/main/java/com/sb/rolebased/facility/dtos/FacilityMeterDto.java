@@ -5,13 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter 
-@Setter
-public class SubAdNumData {
 
-	private Long buildingCount;
-	private Long flatCount;
-	private Long meterCount;
-}
+public class FacilityMeterDto {
+	private String facilityId;
+	 private String facilityName;
+	 private int meterCount;
+
+
+	}
+
+

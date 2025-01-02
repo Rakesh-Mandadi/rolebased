@@ -21,12 +21,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "name"),
 		@UniqueConstraint(columnNames = "email") })
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class UserRole {
 
@@ -42,6 +46,11 @@ public class UserRole {
 	@Size(max = 50)
 	@Email
 	private String email;
+	
+	@NotBlank
+	@Size(max = 10)
+	private String contact;
+	
 
 	@NotEmpty
 	@Size(max = 150)
@@ -55,9 +64,10 @@ public class UserRole {
 	
 	
 
-	public UserRole(String name, String email, String password) {
+	public UserRole(String name, String email, String contact, String password) {
 		this.name = name;
 		this.email = email;
+		this.contact=contact;
 		this.password = password;
 		
 

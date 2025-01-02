@@ -26,12 +26,15 @@ public class SignupReqWithFacility {
 	    @Size(max = 50)
 	    @Email
 	private String email;
+	  @NotBlank
+	    @Size(min =10,max = 50)
 	
+	private String contact;
 	  @NotBlank
 	    @Size(min = 6, max = 40)
 	private String password;
 	  
-	//private String identify;
+//	private String identify;
 	
 	private String facilityId;
 	

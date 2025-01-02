@@ -26,4 +26,22 @@ public class FacilityDto {
 	private int maxFloorPerBuilding;
 	private int maxFlatPerFloor;
 	private List<BuildingDto> buildingDto;
+	
+	
+	public FacilityDto(String facilityId, String facilityName) {
+		super();
+		this.facilityId = facilityId;
+		this.facilityName = facilityName;
+	}
+    
+	public FacilityDto(String facilityId, String facilityName, String street, String city, String state, int pin, String country) {
+		super();
+		this.facilityId = facilityId;
+		this.facilityName = facilityName;
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.pin = pin;
+		this.country = country;
+	}
 }

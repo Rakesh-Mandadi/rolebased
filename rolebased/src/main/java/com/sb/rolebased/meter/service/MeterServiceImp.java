@@ -24,6 +24,7 @@ import com.sb.rolebased.meter.exceptionhandling.MeterTypeExistException;
 import com.sb.rolebased.meter.repository.MeterRepository;
 import com.sb.rolebased.meter.repository.MeterTypeRepository;
 import com.sb.rolebased.meter.utills.MeterUtility;
+import com.sb.rolebased.security.dto.FlatMeterLinkResponseDto;
 
 import lombok.Builder;
 
@@ -60,7 +61,7 @@ public class MeterServiceImp implements MeterService {
 	public List<MeterType> getListMeterType(String facilityId, String meterType) {
 		
 		System.out.println("MeterServiceImp  2");
-	//	List<MeterType> findAll = meterTypeRepository.findAll();
+//		List<MeterType> findAll = meterTypeRepository.findAll();
 		Optional<List<MeterType>> findAllByUserId = meterTypeRepository.findAllByFacilityId(facilityId);
 		List<MeterType> collect = findAllByUserId.orElse(List.of()).stream().filter(mType -> mType.getMeterCat() != null && mType.getMeterCat().equals(meterType)).collect(Collectors.toList());
 		
@@ -154,12 +155,58 @@ public class MeterServiceImp implements MeterService {
 	    // Return the list of meter type statuses
 	    return statusList;
 	}
+	@Override
+    public FlatMeterLinkResponseDto linkFlatsAndMeters(FlatDto flatDto, String facilityId) {
+        Optional<Flat> optionalFlat = flatRepository.findById(flatDto.getFlatNumber());
+
+        if (optionalFlat.isPresent()) {
+            try {
+                Flat savedFlat = optionalFlat.get();
+
+                List<Meter> metersWithoutFlat = meterRepository.findMetersByFacilityIdAndFlatIsNull(facilityId);
+
+                List<Long> meterTypeIds = new ArrayList<>(flatDto.getMeterTypeIds());
+                int assignedMeters = 0;
+                int unassignedMeters = metersWithoutFlat.size();
+
+                for (Meter meter : metersWithoutFlat) {
+                    if (meterTypeIds.contains(meter.getMeterType())) {
+                        meter.setFlat(savedFlat);
+                        meterTypeIds.remove(meter.getMeterType());
+                        assignedMeters++;
+                    }
+                }
+
+                unassignedMeters -= assignedMeters;
+
+                meterRepository.saveAll(metersWithoutFlat);
+
+                List<Meter> existingMeters = savedFlat.getMeter();
+                existingMeters.addAll(metersWithoutFlat);
+
+                flatRepository.save(savedFlat);
+
+                // Return DTO with assigned and unassigned counts
+                return new FlatMeterLinkResponseDto(savedFlat, assignedMeters, unassignedMeters);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+//	@Override
+//	public Flat linkFlatAndMeters(FlatDto flatDto, String facilityId) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
 	
 	
 	@Override
 	public Flat linkFlatAndMeters(FlatDto flatDto, String facilityId) {
 	    // Fetch the flat by its ID
-	    Optional<Flat> optionalFlat = flatRepository.findById(flatDto.getFlatId());
+	    Optional<Flat> optionalFlat = flatRepository.findById(flatDto.getFlatNumber());
 
 	    if (optionalFlat.isPresent()) {
 	        try {
@@ -185,7 +232,7 @@ public class MeterServiceImp implements MeterService {
 	            meterRepository.saveAll(metersWithoutFlat);
 
 	            // Ensure the Flat's meters collection is not replaced
-	            List<Meter> existingMeters = savedFlat.getMeters();
+	            List<Meter> existingMeters = savedFlat.getMeter();
 	            existingMeters.addAll(metersWithoutFlat);
 
 	            // Save the flat with its updated meters
@@ -263,6 +310,7 @@ public class MeterServiceImp implements MeterService {
 	    return null;
 	}
 */
+   
 	
 
 

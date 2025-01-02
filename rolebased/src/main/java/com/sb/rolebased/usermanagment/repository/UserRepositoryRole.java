@@ -22,11 +22,17 @@ public interface UserRepositoryRole extends JpaRepository<UserRole, Long> {
 
 	boolean existsByEmail(String email);
 	
+	boolean existsByContact(String contact);
+	
 	Optional<UserRole> getByName(String name);
 	@Query("UPDATE UserRole u SET u.password = :password WHERE u.email = :email")
     void updatePassword(@Param("email") String email, @Param("password") String password);
 	<S extends UserRole> S save(User user);
     Optional<UserRole> findByEmail(String email);
+
+    @Query("SELECT u FROM UserRole u JOIN u.roles r WHERE r.name = :roleType")
+    List<UserRole> findAllSubAdmins(@Param("roleType") RoleTypeRole roleType);
+
 
 	
 }

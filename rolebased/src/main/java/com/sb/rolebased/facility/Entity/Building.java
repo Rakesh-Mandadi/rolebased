@@ -42,6 +42,8 @@ public class Building {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "building", orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonBackReference
 	private List<Floor> floor;
+	 
+//	private List<Flat> flats;
 	
 	
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "building", orphanRemoval = true, fetch = FetchType.EAGER)

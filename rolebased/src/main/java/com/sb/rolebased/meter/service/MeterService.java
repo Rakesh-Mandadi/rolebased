@@ -11,6 +11,7 @@ import com.sb.rolebased.meter.dto.MeterTypeDto.MeterTypeDtoBuilder;
 import com.sb.rolebased.meter.dto.MeterTypeStatus;
 import com.sb.rolebased.meter.entity.Meter;
 import com.sb.rolebased.meter.entity.MeterType;
+import com.sb.rolebased.security.dto.FlatMeterLinkResponseDto;
 
 public interface MeterService {
 
@@ -27,6 +28,8 @@ public interface MeterService {
 //	List<MeterTypeStatus> checkUnassignedMetersByMeterType(Long facilityId);
 
 	Flat linkFlatAndMeters(FlatDto flatDto, String facilityId);
+	
+	FlatMeterLinkResponseDto linkFlatsAndMeters(FlatDto flatDto, String facilityId);
 
 	List<MeterTypeStatus> checkUnassignedMetersByMeterType(String facilityId, String meterCat);
 

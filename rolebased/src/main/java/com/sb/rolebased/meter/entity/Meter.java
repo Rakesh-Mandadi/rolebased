@@ -16,14 +16,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "meter")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+ @Getter
 @Setter
+@ToString
 @Builder
+
 public class Meter {
 
     @Id
@@ -47,7 +50,8 @@ public class Meter {
      
      private boolean dueStatus;
      private int lstRead;
-     private Long billNumber;	
+     private Long billNumber;
+//     public int flatMeters;
 
 }
 

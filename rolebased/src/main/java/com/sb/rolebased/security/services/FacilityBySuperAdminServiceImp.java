@@ -14,7 +14,7 @@ import com.sb.rolebased.facility.exceptionhandling.FacilityNotFoundException;
 import com.sb.rolebased.facility.repository.FacilityRepository;
 import com.sb.rolebased.facility.repository.FlatRepository;
 import com.sb.rolebased.meter.repository.MeterRepository;
-import com.sb.rolebased.security.dto.FacilityDTO;
+//import com.sb.rolebased.security.dto.FacilityDTO;
 import com.sb.rolebased.security.dto.JoinFacilitySubAdmin;
 import com.sb.rolebased.security.dto.SuperAdNumData;
 import com.sb.rolebased.security.repository.JoinFacilitySubAdminRepository;
@@ -101,9 +101,9 @@ public class FacilityBySuperAdminServiceImp implements FacilityBySuperAdminServi
 
 
 	@Override
-	public List<FacilityDTO> getUnAssignedFacilityList() {
+	public List<FacilityDto> getUnAssignedFacilityList() {
 		System.out.println("FacilityBySuperAdminServiceImp 5");
-		List<FacilityDTO> findFacilityListByUnassignedSubAdmin = facilityRepository.findFacilityListByUnassignedSubAdmin();
+		List<FacilityDto> findFacilityListByUnassignedSubAdmin = facilityRepository.findFacilityListByUnassignedSubAdmin();
 		System.out.println("FacilityBySuperAdminServiceImp 6");
 		
 		return findFacilityListByUnassignedSubAdmin;

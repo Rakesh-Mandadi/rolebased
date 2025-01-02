@@ -16,12 +16,15 @@ public class SuperAdNumData {
 	private Long facilityCount;
 	private Long subAdminCount;
 	private Long flatCount;
-	private Long meterCount;
+	//private Long meter;
+	private Long assignedMeter;
+//	private Long unAssignedMeter;
 	
-	 public SuperAdNumData(long facilityCount, long subAdminCount, long flatCount, long meterCount) {
+	 public SuperAdNumData(long facilityCount, long subAdminCount, long flatCount, long assignedMeter ) {
 	        this.facilityCount = facilityCount;
 	        this.subAdminCount = subAdminCount;
 	        this.flatCount = flatCount;
-	        this.meterCount = meterCount;
-	    }
+	        this.assignedMeter = assignedMeter;
+//	        this.unAssignedMeter = unAssignedMeter;
+ }
 }

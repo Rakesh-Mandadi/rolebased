@@ -98,6 +98,7 @@ public class AuthControllerRole {
 
 		System.out.println("username "+signupRequestRole.getUsername());
 		System.out.println("emil "+signupRequestRole.getEmail());
+		System.out.println("contact "+signupRequestRole.getContact());
 		System.out.println("pass "+signupRequestRole.getPassword());
 		System.out.println("Ident "+signupRequestRole.getIdentify());
 		System.out.println("role "+signupRequestRole.getRole().toString());
@@ -105,7 +106,7 @@ public class AuthControllerRole {
 		if(signupRequestRole.getIdentify().equals("BQ31")) {  // BQ31 is code used while generating Super admin 
 			
 			System.out.println("AuthControllerRole 2");
-			UserRole user = new UserRole(signupRequestRole.getUsername(), signupRequestRole.getEmail(),
+			UserRole user = new UserRole(signupRequestRole.getUsername(), signupRequestRole.getEmail(),signupRequestRole.getContact(),
 					encoder.encode(signupRequestRole.getPassword()));
 
 			Set<String> strRole = signupRequestRole.getRole();

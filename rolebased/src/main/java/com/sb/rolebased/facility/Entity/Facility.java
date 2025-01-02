@@ -3,9 +3,12 @@ package com.sb.rolebased.facility.Entity;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.id.Assigned;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sb.rolebased.facility.dtos.FacilityDto;
+//import com.sb.rolebased.facility.dtos.FacilityDto;
 import com.sb.rolebased.meter.entity.Meter;
+import com.sb.rolebased.meter.entity.AssignedMeter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -41,6 +44,8 @@ public class Facility {
 	private int maxBuilding;
 	private int maxFloorPerBuilding;
 	private int maxFlatPerFloor;
+	private long AssignedMeter;
+	private long UnAssignedMeter;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "facility")
 	@JsonManagedReference 
@@ -48,6 +53,8 @@ public class Facility {
 	
 	@OneToMany(mappedBy = "facility")
     private List<Meter> meters;
-
+	
+	@OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<AssignedMeter> assignedMeter;
     
 }

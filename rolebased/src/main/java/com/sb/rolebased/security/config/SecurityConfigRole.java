@@ -58,7 +58,7 @@ public class SecurityConfigRole {
         System.out.println("In security filter chain....");
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/v1/auth/signup","/api/v1/auth/*", "/api/v1/auth/signin", "/api/v1/auth/subAdmin/signin", "/api-docs", "/api/v1/users/*")
+                        auth.requestMatchers("/api/v1/auth/signup","/api/v1/auth/*", "/api/v1/auth/signin", "/api/v1/auth/subAdmin/signin", "/api-docs", "/api/v1/users/**")
                         			.permitAll()
  //                       		.requestMatchers("/api/v1/users/**")
  //                            .authenticated()

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.sb.rolebased.facility.Entity.Facility;
+import com.sb.rolebased.facility.dtos.FacilityDto;
 import com.sb.rolebased.security.dto.FacilityDTO;
 import com.sb.rolebased.security.dto.SuperAdNumData;
 
@@ -18,7 +19,7 @@ public interface FacilityRepository extends JpaRepository<Facility, String> {
 //	    List<FacilityDTO> findFacilityListByUnassignedSubAdmin();
 
 	 @Query("SELECT new com.sb.rolebased.security.dto.FacilityDTO(f.facilityId, f.facilityName) FROM Facility f WHERE f.facilityId NOT IN (SELECT CAST(j.facilityId AS string) FROM JoinFacilitySubAdmin j)")
-	 List<FacilityDTO> findFacilityListByUnassignedSubAdmin();
+	 List<FacilityDto> findFacilityListByUnassignedSubAdmin();
 	 
 	 @Query("SELECT new com.sb.rolebased.security.dto.FacilityDTO(f.facilityId, f.facilityName, f.street, f.city, f.state, f.pin, f.country, f.maxBuilding, f.maxFloorPerBuilding, f.maxFlatPerFloor) " +
 	           "FROM Facility f " +
@@ -34,8 +35,9 @@ public interface FacilityRepository extends JpaRepository<Facility, String> {
 	           "COUNT(f), " +
 	           "(SELECT COUNT(sa) FROM JoinFacilitySubAdmin sa), " +
 	           "(SELECT COUNT(fl) FROM Flat fl), " +
-	           "(SELECT COUNT(m) FROM Meter m)) " +
-	           "FROM Facility f")
+	           "(SELECT COUNT(am) FROM AssignedMeter am))" +
+//	            "(SELECT COUNT(uam) FROM UnAssignedMeter uam) " +
+	            "FROM Facility f")
 	 SuperAdNumData findNumericData();
 
 }

@@ -16,6 +16,7 @@ public class UserManagmentServiceRole {
 	UserRepositoryRole userRepositoryRole;
 	
 	public Optional<UserRole> getUser(String name){
+		
 			System.out.println("UserManagmentServiceRole 1");			
 			Optional<UserRole> user = userRepositoryRole.getByName(name);			
 			System.out.println("after getting the "+user.get().getPassword());			

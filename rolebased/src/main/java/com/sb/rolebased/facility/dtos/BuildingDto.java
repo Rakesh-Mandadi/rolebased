@@ -2,6 +2,8 @@ package com.sb.rolebased.facility.dtos;
 
 import java.util.List;
 
+import com.sb.rolebased.security.dto.FacilityDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +19,6 @@ import lombok.Setter;
 public class BuildingDto {
 
 	private String buildingName;
-	private FacilityDto facilityDto;
+	private FacilityDTO facilityDto;
 	private List<FloorDto> floorDto;
 }

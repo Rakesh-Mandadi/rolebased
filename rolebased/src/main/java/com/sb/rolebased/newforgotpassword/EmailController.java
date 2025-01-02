@@ -2,6 +2,7 @@ package com.sb.rolebased.newforgotpassword;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,13 +13,13 @@ import com.sb.rolebased.forgotpassword.ResetPasswordRequestDto;
 import com.sb.rolebased.newforgotpassword.*;
 
 @RestController
-
+@RequestMapping("/api/v1/auth")
 public class EmailController {
 	
 	 @Autowired private EmailService emailService;
 
 	    // Sending a simple Email
-	    @PostMapping("/api/v1/auth/sendOTP")
+	    @PostMapping("/sendOTP")
 	    public String
 	    sendMail(@RequestBody EmailDetails details)
 	    {
@@ -27,13 +28,13 @@ public class EmailController {
 
 	        return status;
 	    }
-	    @PostMapping("/api/v1/auth/verifyOTP")
+	    @PostMapping("/verifyOTP")
 		public boolean verifyOTP(@RequestParam String verifyOTP,@RequestParam String email) {
 			boolean status = emailService.verifyOTP(verifyOTP,email);
 			
 			return status;
 		}
-	    @PostMapping("/api/v1/auth/resetPassword")
+	    @PostMapping("/resetPassword")
 	    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequestDto resetPasswordRequestDto) {
 	        boolean isReset = emailService.resetPassword(resetPasswordRequestDto);
 

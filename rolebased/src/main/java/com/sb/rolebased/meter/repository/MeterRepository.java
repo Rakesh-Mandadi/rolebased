@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.sb.rolebased.facility.dtos.FlatDto;
 import com.sb.rolebased.meter.entity.Meter;
 import com.sb.rolebased.reading.dto.BillDataDTO;
 
@@ -79,5 +80,11 @@ public interface MeterRepository extends JpaRepository<Meter, Long> {
 		                                                  @Param("meterTypeId") Long meterTypeId);
 		
 		
-		//void findAllByMeterNumberIn(List<Long> meterNumber);
+		 List<Meter> findAllByMeterNumberIn(List<Long> meterNumber);
+		 
+//		 @Query("SELECT m.flat_Id, COUNT(m) FROM Meter m GROUP BY m.flat_Id" )
+
+		    @Query("SELECT m.flat, COUNT(m) FROM Meter m GROUP BY m.flat")
+//		    List<Object[]> countByFlatId();
+		    List<FlatDto> findFlatWithMeterCount(); 
 }

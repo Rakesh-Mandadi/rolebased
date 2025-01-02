@@ -31,6 +31,8 @@ public class UserDetailsImplRole implements UserDetails {
 	private String password;
 	
 	private String email;
+	
+
 
 	private Collection<? extends GrantedAuthority> authorities;
 	
@@ -40,7 +42,7 @@ public class UserDetailsImplRole implements UserDetails {
 	
 	public UserDetailsImplRole(String email, String username, String password, Long long1,
 			Collection<? extends GrantedAuthority> authorities) {
-		//super();
+		super();
 		this.id = long1;
 		this.username = username;
 		this.password = password;
