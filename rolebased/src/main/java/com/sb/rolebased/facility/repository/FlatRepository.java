@@ -20,7 +20,9 @@ public interface FlatRepository extends JpaRepository<Flat, Long> {
 	           "WHERE f.floor.floorId = :floorId")
 	    List<FlatListDto> findByFloorId(@Param("floorId") Long floorId);
 
-	  List<Flat> findByFloorFloorIdIn(List<Long> floorIds);
+	    List<Flat> findByFloorFloorIdIn(List<Long> floorIds);
+	 
+//	  List<Flat> findByBuildingId(Long buildingId);
 	
 	
 //	  @Query("SELECT new com.sb.rolebased.facility.dtos.FlatDto(f.flatId, f.flatNumber, COUNT(m)) " +

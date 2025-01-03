@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -375,6 +376,48 @@ public class SuperAdminControllerRole {
         logger.info("Flat meter count map: {}", flatDetails);
         return flatDetails;
     }
+//    @GetMapping("/getFlatDetails")
+//    @PreAuthorize("hasRole('SUPERADMIN')")
+//    public List<FlatDto> getFlatDetails() {
+//        logger.info("Fetching all flats and meters...");
+//
+//        // Retrieve all flats
+//        List<Flat> allFlats = flatRepository.findAll();
+//        logger.info("Retrieved {} flat records.", allFlats.size());
+//
+//        // Retrieve all meters
+//        List<Meter> allMeters = meterRepository.findAll();
+//        logger.info("Retrieved {} meter records.", allMeters.size());
+//
+//        // Map to store meter count for each flat
+//        Map<Long, Integer> flatCountMap = new HashMap<>();
+//
+//        // Initialize all flats with 0 meters
+//        for (Flat flat : allFlats) {
+//            flatCountMap.put(flat.getFlatNumber(), 0);
+//        }
+//
+//        // Count meters for each flat
+//        for (Meter meter : allMeters) {
+//            try {
+//                Long flatId = meter.getFlat().getFlatNumber();
+//                flatCountMap.put(flatId, flatCountMap.getOrDefault(flatId, 0) + 1);
+//            } catch (Exception e) {
+//                logger.error("Error processing meter for flat: {}", meter.getFlat(), e);
+//            }
+//        }
+//
+//        // Create FlatDto list
+//        List<FlatDto> flatDetails = new ArrayList<>();
+//        for (Map.Entry<Long, Integer> entry : flatCountMap.entrySet()) {
+//            FlatDto flatDto = new FlatDto(entry.getKey(), entry.getValue(), null);  // flatId, meter count, additional data (null for now)
+//            flatDetails.add(flatDto);
+//        }
+//
+//        logger.info("Final flat meter count map: {}", flatDetails);
+//        return flatDetails;
+//    }
+
     
    
         @GetMapping("/getFacilityMeterDetails")
@@ -398,31 +441,50 @@ public class SuperAdminControllerRole {
         }
 
         //blockname , flor no , flatno ,username 
-            @GetMapping("/{facilityId}/getAssignedMeterDetails")
-            @PreAuthorize("hasRole('SUPERADMIN')")
-            public List<BuildingMeterDto>  getAssignedMeterDetails(@PathVariable String facilityId) {
-            	Optional<Facility> facility = facilityRepository.findById(facilityId);
-            	List<Building> buildings=null;
-            	if(facility.isPresent())
-            	buildings =  facility.get().getBuilding();
-            	else throw new RuntimeException("no facility fond with id ");
-            	
-            	List<BuildingMeterDto>  result=new ArrayList<>();
-            	for (Building building : buildings) {
-//            		List<Floor> floors = building.getFloor();
-            		for (Floor floor : building.getFloor()) {
-            			for (Flat flat : floor.getFlats()) {
-            				
-						result.add(new BuildingMeterDto(building.getBuildingName(),floor.getFloorNumber(),flat.getFlatNumber(),null));
-					}
-				}}
-            	return result;
-            	
-            	
-            	
-            	
+        @GetMapping("/{facilityId}/getAssignedMeterDetails")
+//        @PreAuthorize("hasRole('SUPERADMIN')")
+        public List<BuildingMeterDto> getAssignedMeterDetails(@PathVariable String facilityId) {
+            // Validate facilityId early
+            if (facilityId == null || facilityId.isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Facility ID cannot be null or empty");
             }
-        
+
+            Optional<Facility> facility = facilityRepository.findById(facilityId);
+
+            // Handle facility not found - Return 404
+            if (facility.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No facility found with ID: " + facilityId);
+            }
+
+            List<Building> buildings = facility.get().getBuilding();
+
+            if (buildings == null || buildings.isEmpty()) {
+                // Log and return an empty list instead of throwing an error
+                System.out.println("No buildings found for facility ID: " + facilityId);
+                return List.of();
+            }
+
+            List<BuildingMeterDto> result = new ArrayList<>();
+
+            for (Building building : buildings) {
+                for (Floor floor : building.getFloor()) {
+                    for (Flat flat : floor.getFlats()) {
+                    	System.out.println(flat.getMeter());
+                    	if (!flat.getMeter().isEmpty())
+                        result.add(new BuildingMeterDto(
+                            building.getBuildingName(),
+                            floor.getFloorNumber(),
+                            flat.getFlatNumber(),
+                            null  // Null value, consider adding user or meter data if available
+                        ));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
 
     
         

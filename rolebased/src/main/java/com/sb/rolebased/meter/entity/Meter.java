@@ -1,5 +1,7 @@
 package com.sb.rolebased.meter.entity;
 
+import org.apache.catalina.User;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sb.rolebased.facility.Entity.Facility;
 import com.sb.rolebased.facility.Entity.Flat;
@@ -51,6 +53,8 @@ public class Meter {
      private boolean dueStatus;
      private int lstRead;
      private Long billNumber;
+     
+
 //     public int flatMeters;
 
 }

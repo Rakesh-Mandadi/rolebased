@@ -1,7 +1,10 @@
 package com.sb.rolebased.subadmin.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ import com.sb.rolebased.facility.dtos.FlatDto;
 import com.sb.rolebased.facility.dtos.FlatListDto;
 import com.sb.rolebased.facility.dtos.FloorListDto;
 import com.sb.rolebased.facility.dtos.SubAdNumData;
+import com.sb.rolebased.facility.dtos.SubFlatDto;
+import com.sb.rolebased.facility.repository.FlatRepository;
 import com.sb.rolebased.facility.service.FacilityService;
 import com.sb.rolebased.facility.utills.Utility;
 import com.sb.rolebased.meter.dto.MeterDto;
@@ -65,6 +70,8 @@ public class SubAdminController {
 	
 	@Autowired
 	BillingService billingService;
+	@Autowired
+	FlatRepository flatRepository;
 
 	@PutMapping("/updateFacilityDetails")          // facility name and Address update
 	@PreAuthorize("hasAnyRole('SUBADMIN','SUPERADMIN')") 
@@ -364,6 +371,27 @@ public class SubAdminController {
 		
 		Billinfo billInfo = billingService.getBillInfo(facilityId, billNumber);
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(SuccessResponse.<Billinfo>builder().data(billInfo).massage("Metr reding data").build());
+				.body(SuccessResponse.<Billinfo>builder().data(billInfo).massage("Meter reding data").build());
 	}
+	//flor ,flat no 
+//	 @GetMapping("/{buildingId}/list")
+//	    public ResponseEntity<List<SubFlatDto>> getFlatsByBuilding(@PathVariable Long buildingId) {
+//	        Optional<Flat> flats = flatRepository.findById(buildingId);
+//	        
+//	        if (flats.isEmpty()) {
+//	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//	                    .body(Collections.emptyList());
+//	        }
+//
+//	        List<SubFlatDto> flatDtos = flats.stream()
+//	                .map(flat -> new SubFlatDto(
+//	                        flat.getFlatNumber(),
+//	                        flat.getFloor().getFloorNumber(),
+//	                        flat.getFloor().getBuilding().getBuildingName(),
+//	                        flat.getFlatId()
+//	                ))
+//	                .collect(Collectors.toList());
+//
+//	        return ResponseEntity.ok(flatDtos);
+//	    }
 }

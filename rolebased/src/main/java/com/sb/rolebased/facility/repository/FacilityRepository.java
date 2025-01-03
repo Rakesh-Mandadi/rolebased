@@ -35,7 +35,7 @@ public interface FacilityRepository extends JpaRepository<Facility, String> {
 	           "COUNT(f), " +
 	           "(SELECT COUNT(sa) FROM JoinFacilitySubAdmin sa), " +
 	           "(SELECT COUNT(fl) FROM Flat fl), " +
-	           "(SELECT COUNT(am) FROM AssignedMeter am))" +
+	           "(SELECT COUNT(m) FROM Meter m))" +
 //	            "(SELECT COUNT(uam) FROM UnAssignedMeter uam) " +
 	            "FROM Facility f")
 	 SuperAdNumData findNumericData();

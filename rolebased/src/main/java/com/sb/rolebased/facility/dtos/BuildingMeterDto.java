@@ -19,10 +19,7 @@ import lombok.Setter;
 public class BuildingMeterDto {
 	 private String buildingName;
 	 private int floorno;
-	    private long Flatno;
+	    private long flatno;
 //	    private long MeterNumber;
 	    private String username;
-	    
-
-
 }

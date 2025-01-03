@@ -46,7 +46,11 @@ public class Flat {
 	    @OneToMany(mappedBy = "flat", cascade = CascadeType.ALL, orphanRemoval = true)
 	    @JsonManagedReference
 	    private List<Meter> meter;
-//	    
+	    
+//	    @ManyToOne
+//	    @JoinColumn(name = "buildingId")
+//	    private Building building;
+    
 //	    @ManyToOne
 //	    @JoinColumn(name = "user_role_id")  // Links to UserRole
 //	    private UserRole userRole;
